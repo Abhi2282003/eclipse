@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Scramble Eclipse Terms Game</title>
+</head>
+<body>
+    <div id="game-container">
+        <div id="background-video-container">
+            <video id="background-video" autoplay loop muted>
+                <source src="earth.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <h1>Scramble Eclipse Terms Game</h1>
+        <div id="score-container">
+            <p>Score: <span id="score-value">0</span></p>
+        </div>
+        <div id="term-container">
+            <h2>Scrambled Eclipse Term:</h2>
+            <p id="scrambled-word"></p>
+            <label for="guess-input">Your Guess:</label>
+            <input type="text" id="guess-input" placeholder="Enter your guess">
+            <button id="check-button">Check</button>
+            <button id="new-word-button">New Term</button>
+        </div>
+        <div id="result-container">
+            <p id="result"></p>
+            <p id="hint"></p>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
