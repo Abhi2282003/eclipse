@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Include your common meta tags and CSS styles -->
+    <!-- ... -->
+    <style>
+        /* Your CSS styles here */
+        body {
+            /* Background image for Norse Mythology - Part 1 */
+            background-image: url('/wolf.jpg'); /* Replace 'norse_mythology_1.jpg' with your image file path */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            /* ... Other styles ... */
+            position: relative;
+            margin: 0; /* Remove default margin */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden; /* Hide overflow to contain the square */
+        }
+
+        /* Style for the content container */
+        .content {
+            text-align: center;
+            padding: 20px;
+            position: relative; /* Position for pseudo-element */
+        }
+
+        .content::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 80% ;
+            height: 100%;;
+            background-color: rgba(255, 255, 255, 0.7); /* Transparent white background */
+            border-radius: 10px;
+            transform: scaleX(0); /* Initial scale to create a square */
+            transform-origin: left; /* Scale from left to right */
+            animation: expandSquare 2s ease forwards; /* Animation to expand the square */
+        }
+
+        
+
+        p {
+            font-size: 35px; /* Increased font size */
+            color: #000; /* Black text color */
+            margin-top: 20px; /* Increased spacing between heading and paragraph */
+            animation: fadeInUp 2s ease 2s forwards; /* Animation for text */
+            max-width: 80%; /* Limit paragraph width for better readability */
+            line-height: 1.4; /* Adjust line height for readability */
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #2b255e; /* Button background color */
+            color: #fff; /* Button text color */
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s, color 0.3s;
+            animation: fadeInUp 2s ease 3s forwards; /* Animation for button */
+        }
+
+        .button:hover {
+            background-color: #000; /* Button background color on hover */
+        }
+
+        /* Keyframes for expanding square */
+        @keyframes expandSquare {
+            100% {
+                transform: scaleX(1);
+            }
+        }
+
+        /* Keyframes for text fade-in */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <p>These celestial wolves, Sköll and Hati, were believed to chase the Sun and the Moon through the skies.</p>
+        <p>During an eclipse, it was as if the wolves were closing in on their celestial prey.</p>
+       
+        <a href="part3.html" class="button">Next</a>
+    </div>
+</body>
+</html>
+
+        </p>
+   
+    </div>
+</body>
+</html>

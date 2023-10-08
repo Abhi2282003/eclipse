@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video On Click</title>
+    <style>
+        /* Optional: Style the button */
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <video id="myVideo" controls>
+            <source src="/history.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <div>
+        <button id="startButton">Start</button>
+    </div>
+
+    <script>
+        // Get the video element and button
+        const video = document.getElementById('myVideo');
+        const startButton = document.getElementById('startButton');
+
+        // Add an event listener to the button
+        startButton.addEventListener('click', function () {
+            // Play the video when the button is clicked
+            video.play();
+        });
+    </script>
+</body>
+</html>

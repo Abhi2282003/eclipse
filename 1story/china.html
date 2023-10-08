@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Image Text</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        #image-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #text-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(128, 128, 128, 0.7); /* Gray with transparency */
+            font-size: 25pt;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            white-space: pre-line; /* Preserve line breaks */
+            text-align: center; /* Center-align the text */
+        }
+
+        #moving-image {
+            position: absolute;
+            bottom: 0;
+            width: 200px; /* Corrected width */
+            height: 100px; /* Corrected height */
+            left: -100px; /* Initial position outside the viewport */
+            cursor: pointer;
+        }
+
+        #start-button {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="image-container">
+        <img src="./chinesegate.jpg" alt="Background Image">
+    </div>
+    <div id="text-container">
+        <p id="text"></p>
+    </div>
+    <a href="/1story/dragon-drag.html">
+        <img id="moving-image" src="./tortoise.png" alt="Moving Image">
+    </a>
+    <button id="start-button">Start</button>
+
+    <!-- Audio for continuous playback -->
+    <audio id="drumSound" src="./ChineseTones.mp3" loop></audio>
+
+    <script>
+        const textElement = document.getElementById("text");
+        const text = "Want to Start Your Journey?\nFind the Ancient Tortoise and Ride Him.";
+        let charIndex = 0;
+
+        const startButton = document.getElementById("start-button");
+        let textStarted = false;
+
+        startButton.addEventListener("click", () => {
+            if (!textStarted) {
+                typeText();
+                textStarted = true;
+                startTortoiseMovement();
+                playAudio();
+            }
+        });
+
+        function typeText() {
+            if (charIndex < text.length) {
+                textElement.textContent += text.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeText, 100);
+            }
+        }
+
+        const movingImage = document.getElementById("moving-image");
+
+        function startTortoiseMovement() {
+            let left = -100; // Initial position outside the viewport
+            const moveSpeed = 1; // Adjust the speed as needed
+            const moveInterval = setInterval(() => {
+                left += moveSpeed;
+                movingImage.style.left = left + "px";
+                if (left >= window.innerWidth) {
+                    clearInterval(moveInterval);
+                }
+            }, 10);
+        }
+
+        movingImage.addEventListener("click", () => {
+            // Redirect to the next HTML page when clicked
+            window.location.href = "123.html";
+        });
+
+        function playAudio() {
+            const drumSound = document.getElementById("drumSound");
+            drumSound.play();
+        }
+    </script>
+</body>
+</html>

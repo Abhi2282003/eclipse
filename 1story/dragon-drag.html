@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Redirect</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        .circle {
+            width: 500px;
+            height: 500px;
+            position: absolute;
+            cursor: grab;
+            bottom: 50%;
+            left: 50%;
+            transform: translate(-50%, 50%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .circle img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 50%;
+        }
+
+        #draggableCircle {
+            width: 400px;
+            height: 400px;
+            bottom: 10px;
+            left: 10px;
+            background-color: transparent;
+            z-index: 2;
+        }
+
+        #text-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(128, 128, 128, 0.7); /* Gray with transparency */
+            font-size: 20pt;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            white-space: pre-line; /* Preserve line breaks */
+            text-align: center; /* Center-align the text */
+        }
+
+        video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        .label {
+            text-align: center;
+            margin-top: 20px;
+            color: black;
+            font-size: 40px;
+            background-color: grey;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Video background with autoplay, loop, and muted -->
+    <video autoplay loop muted>
+        <source src="./dragon.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Add an audio element for autoplay -->
+    <audio id="backgroundAudio" autoplay loop>
+        <source src="./Dragon Roar.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag.
+    </audio>
+
+    <!-- Rest of your HTML content -->
+    <div class="circle" id="targetCircle">
+        <img src="./sun1.png" alt="Image 2">
+    </div>
+    <div class="circle" id="draggableCircle">
+        <img src="./drago.png" alt="Image 1">
+    </div>
+    <div class="content-box" id="contentBox">
+        <a href="/1story/drum.html" id="redirectLink" style="display: none;"></a>
+    </div>
+
+    <div class="label" id="startLabel">
+        <!-- This text will be printed one character at a time -->
+    </div>
+
+    <script>
+        const startLabel = document.getElementById("startLabel");
+        const labelText = "During a solar eclipse, one such celestial dragon, known as Longwei, would gracefully descend from the heavens. Its colossal form cast a shadow that enveloped the Sun, plunging the world into darkness.";
+        let charIndex = 0;
+
+        function printText() {
+            if (charIndex < labelText.length) {
+                startLabel.textContent += labelText.charAt(charIndex);
+                charIndex++;
+                setTimeout(printText, 100); // Adjust the delay as needed
+            }
+        }
+
+        // Start printing the text when the page loads
+        printText();
+
+        const draggableCircle = document.getElementById("draggableCircle");
+        const targetCircle = document.getElementById("targetCircle");
+        const contentBox = document.getElementById("contentBox");
+        const redirectLink = document.getElementById("redirectLink");
+        const backgroundAudio = document.getElementById("backgroundAudio"); // Added this line
+
+        let isDragging = false;
+        let offsetX, offsetY;
+        let autoRedirectTimer;
+
+        draggableCircle.addEventListener("mousedown", (e) => {
+            isDragging = true;
+            offsetX = e.clientX - draggableCircle.getBoundingClientRect().left;
+            offsetY = e.clientY - draggableCircle.getBoundingClientRect().top;
+            draggableCircle.style.cursor = "grabbing";
+        });
+
+        document.addEventListener("mousemove", (e) => {
+            if (!isDragging) return;
+
+            const newX = e.clientX - offsetX;
+            const newY = e.clientY - offsetY;
+
+            draggableCircle.style.left = newX + "px";
+            draggableCircle.style.top = newY + "px";
+
+            const draggableRect = draggableCircle.getBoundingClientRect();
+            const targetRect = targetCircle.getBoundingClientRect();
+
+            if (
+                draggableRect.left + draggableRect.width / 2 >= targetRect.left &&
+                draggableRect.right - draggableRect.width / 2 <= targetRect.right &&
+                draggableRect.top + draggableRect.height / 2 >= targetRect.top &&
+                draggableRect.bottom - draggableRect.height / 2 <= targetRect.bottom
+            ) {
+                contentBox.style.display = "block";
+                redirectLink.style.display = "block";
+                backgroundAudio.play(); // Play audio when the draggable image is placed on the fixed image
+                autoRedirectTimer = setTimeout(() => {
+                    window.location.href = redirectLink.href;
+                }, 2000); // Redirect after 2 seconds
+            } else {
+                contentBox.style.display = "none";
+                redirectLink.style.display = "none";
+                backgroundAudio.pause(); // Pause audio when the draggable image is moved away
+                clearTimeout(autoRedirectTimer);
+            }
+        });
+
+        document.addEventListener("mouseup", () => {
+            isDragging = false;
+            draggableCircle.style.cursor = "grab";
+        });
+    </script>
+</body>
+</html>

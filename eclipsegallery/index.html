@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <style>
+        /* Add your CSS styles here */
+        .image-gallery {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .gallery-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .gallery-item {
+            width: calc(25% - 20px); /* 4 images per row with some spacing */
+            margin: 20px;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            max-width: none; /* Allow the image to exceed its natural size */
+            object-fit: cover; /* Cover the container with the image while preserving its aspect ratio */
+            transition: transform 0.5s;
+        }
+
+        .gallery-item .description {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            transform: rotateY(180deg);
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: transform 0.5s, opacity 0.5s;
+        }
+
+        .gallery-item:hover img {
+            transform: rotateY(180deg);
+        }
+
+        .gallery-item:hover .description {
+            transform: rotateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="image-gallery">
+        <div class="gallery-row">
+            <div class="gallery-item">
+                <img src="/eclipse/annular_eclipse.jpg" alt="Image 1">
+                <div class="description">Description for Image 1</div>
+            </div>
+            <div class="gallery-item">
+                <img src="/eclipse/corona.jpeg" alt="Image 2">
+                <div class="description">Description for Image 2</div>
+            </div>
+            <div class="gallery-item">
+                <img src="/eclipse/lunar_eclipse.jpg" alt="Image 3">
+                <div class="description">Description for Image 3</div>
+            </div>
+            <div class="gallery-item">
+                <img src="/eclipse/partial_eclipse.jpg" alt="Image 4">
+                <div class="description">Description for Image 4</div>
+            </div>
+            <div class="gallery-item">
+                <img src="/eclipse/solar_eclipse.jpeg" alt="Image 5">
+                <div class="description">Description for Image 5</div>
+            </div>
+            <div class="gallery-item">
+                <img src="/eclipse/total_eclipse.jpeg" alt="Image 6">
+                <div class="description">Description for Image 6</div>
+            </div>
+            <div class="gallery-item">
+                <img src="/eclipse/lunar_eclipse.jpg" alt="Image 7">
+                <div class="description">Description for Image 7</div>
+            </div>
+            <div class="gallery-item">
+                <img src="/eclipse/lunar_eclipse.jpg" alt="Image 8">
+                <div class="description">Description for Image 8</div>
+            </div>
+            <div class="gallery-item">
+                <img src="/eclipse/lunar_eclipse.jpg" alt="Image 9">
+                <div class="description">Description for Image 9</div>
+            </div>
+            <div class="gallery-item">
+                <img src="/eclipse/lunar_eclipse.jpg" alt="Image 10">
+                <div class="description">Description for Image 10</div>
+            </div>
+        </div>
+        <!-- Repeat the above structure for additional rows if necessary -->
+    </div>
+    <script>
+        // Your JavaScript code goes here
+        const flipCards = document.querySelectorAll('.flip-card-inner');
+
+        flipCards.forEach((card) => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'rotateY(180deg)';
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'rotateY(0deg)';
+            });
+        });
+    </script>
+</body>
+</html>

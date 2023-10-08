@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Video with Custom TTF Font</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 100px;
+        }
+
+        #background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        #image-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+
+        #text-container {
+            font-family: 'YourCustomFont', sans-serif;
+            /* Use your custom font as the primary font, and fall back to a generic sans-serif font if it's not available. */
+            font-size: 20px;
+            color: black;
+            white-space: pre;
+            overflow: hidden;
+            border-right: 2px solid white;
+            z-index: 4;
+            position: absolute;
+            top: 23.5%;
+            left: 48.5%;
+            transform: translateX(-50%);
+        }
+
+        .bottom-left-image,
+        .bottom-right-image {
+            position: absolute;
+            opacity: 0; /* Initially set opacity to 0 */
+            z-index: 2;
+            height: 100px;
+            width: 100px;
+            animation: fadeIn 8s ease-in-out; /* Add fade-in animation */
+        }
+
+        .bottom-left-image {
+            bottom: 30%;
+            right: 35%;
+            height: 200px;
+            width: 200px;
+        }
+
+        .bottom-right-image {
+            bottom: 50%;
+            right: 0;
+        }
+
+        /* Next Button */
+#next-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    text-decoration: none; /* Remove the underline from the link */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 4;
+}
+
+#next-button:hover {
+    background-color: #555;
+}
+
+
+        @font-face {
+            font-family: 'YourCustomFont'; /* Choose a font name for reference */
+            src: url('/2story/scroll.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <video id="background-video" autoplay loop muted>
+        <source src="/1story/backscroll.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <img id="image-overlay" src="/1story/scroll1.png" alt="Image Overlay">
+    
+    <div id="text-container">
+       INDIA
+        <span id="line1"></span>
+        <span id="line2"></span>
+        <span id="line3"></span>
+        <span id="line4"></span>
+    </div>
+    <!-- Next Button -->
+<a id="next-button" href="./scroll2.html">Next</a>
+
+
+    <img class="bottom-left-image fade-in" src="/1story/manthan.webp" alt="Bottom Left Image">
+    <img class="bottom-right-image fade-in" src="/1story/drago.png" alt="Bottom Right Image">
+
+    <script>
+        const lines = [
+            "In Hindu mythology,\n Rahu's story traces back to \nancient times when the gods \nand demons churned the\n ocean to extract the elixir of\n immortality, known as amrita\n. Mohini, a female avatar of \nVishnu, distributed amrita \nto the gods.",
+        ];
+
+        const textContainer = document.getElementById("text-container");
+        const bottomLeftImage = document.querySelector(".bottom-left-image");
+        const bottomRightImage = document.querySelector(".bottom-right-image");
+
+        function typeText() {
+            let currentLine = 0;
+            let charIndex = 0;
+
+            function typeLine() {
+                if (currentLine < lines.length) {
+                    const lineElement = document.getElementById(`line${currentLine + 1}`);
+                    const lineText = lines[currentLine];
+
+                    if (charIndex < lineText.length) {
+                        lineElement.textContent += lineText[charIndex];
+                        charIndex++;
+
+                        if ((charIndex / lineText.length) >= 0.1) {
+                            // Show the images when 10% of the text is printed
+                            bottomLeftImage.style.opacity = 1;
+                            bottomRightImage.style.opacity = 1;
+                        }
+
+                        setTimeout(typeLine, 50); // Adjust the timing as needed
+                    } else {
+                        currentLine++;
+                        charIndex = 0;
+                        setTimeout(typeLine, 1000); // Delay between lines
+                    }
+                }
+            }
+
+            typeLine();
+        }
+
+        typeText();
+    </script>
+</body>
+</html>

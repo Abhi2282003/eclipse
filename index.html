@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Website</title>
+    <style>
+        /* Reset some default styles */
+        body, h1, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Set a background color and text color */
+        body {
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        /* Create a video background */
+        video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1; /* Place the video behind other content */
+        }
+
+        /* Create a header with a transparent background */
+        header {
+            background: rgba(0, 0, 0, 0.5); /* Add a semi-transparent background color */
+            text-align: center;
+            padding: 10px 0;
+            color: white;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+        }
+
+        .container {
+            max-width: 500px;
+            left: -500px; /* Initially, the container is off-screen to the left */
+            transition: left 0.5s ease-in-out; /* Add a smooth left position transition */
+            display: flex;
+            background-color: rgba(0, 0, 0, 0.5); /* Add a background color */
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+        }
+
+        .arrow-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: white;
+        }
+
+        .sidebar {
+            width: 80%; /* Adjust the width as needed */
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+           
+            font-size: 10pt; /* Adjust to leave space for the sidebar */
+            z-index: 3;
+        }
+
+        .main-content a {
+            color: white;
+        }
+        
+
+        .featured-games-container {
+            padding: 20px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            left: 50%;
+            top: 70%;
+            transform: translate(-50%, -50%); /* Center the container */
+            width: 90%; /* Adjust the width as needed */
+            text-align: center;
+        
+        }
+        
+
+       
+        .game-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .game-box {
+            width: 24%;
+            height: 300px;
+            border-radius: 15px;
+            position: relative;
+        }
+
+.game-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    position: absolute;
+    border-radius: 15px; 
+
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+
+        .game-overlay {
+           
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .game-label {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            font-size: 1.2rem;
+            color: white;
+            z-index: 1;
+        }
+
+        .game-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Video background -->
+    <video autoplay loop muted poster="your-video-poster.jpg">
+        <source src="./webpage/as.mp4" type="video/mp4">
+    </video>
+
+    <!-- Header -->
+    <header>
+        <h1>Eclipses: Perspective is Everything</h1>
+        <p>An eclipse is a captivating celestial event where one celestial body passes in front of another, temporarily obscuring its view.<br>So, let's dive in and get to know more about them!</p>
+    </header>
+
+    <!-- Arrow button to toggle sidebar -->
+    <div class="arrow-button" onclick="toggleSidebar()">&#9776;</div>
+
+    <!-- Main content container -->
+    <div class="container">
+       
+
+        <!-- Right side main content -->
+        <div class="main-content">
+            <h2>Main Content</h2>
+           
+                
+                        <ul ><a href="/maincontent/eef.html">EFFECTS</a></ul>
+                        <ul ><a href="/maincontent/pre.html">PRECAUTIONS</a></ul>
+                        <ul ><a href="/1story/world.html">MYTHOLOGICAL STORIES</a></ul>
+                        <ul ><a href="/maincontent/aboutus.html">ABOUT US</a></ul>
+                        <ul ><a href="/maincontent/history.html">HISTORY</a></ul>
+                        <ul ><a href="/witch story/index.html">ECLIPSE STORY</a></ul>
+                        <ul ><a href="/maincontent/gallery.html">ECLIPSE GALEERY</a></ul>
+
+                       
+            <!-- Add your main content here -->
+        </div>
+    </div>
+
+    <!-- Featured Games Container -->
+    <div class="featured-games-container">
+        <h2>Featured Games</h2>
+        <div class="game-container">
+            <a class="game-box" href="./eclipse/index.html">
+                <video class="game-video" autoplay loop muted>
+                    <source src="./eclipse/space.mp4" type="video/mp4">
+                </video>
+                <div class="game-overlay"></div>
+                <div class="game-label">Game 1</div>
+                <span class="game-link">Play Now</span>
+            </a>
+            <a class="game-box" href="/puzzle/index.html">
+                <video class="game-video" autoplay loop muted>
+                    <source src="./main/mainpage.mp4" type="video/mp4">
+                </video>
+                <div class="game-overlay"></div>
+                <div class="game-label">Game 2</div>
+                <span class="game-link">Play Now</span>
+            </a>
+            <a class="game-box" href="./word_game/index.html">
+                <video class="game-video" autoplay loop muted>
+                    <source src="./word_game/earth.mp4" type="video/mp4">
+                </video>
+                <div class="game-overlay"></div>
+                <div class="game-label">Game 3</div>
+                <span class="game-link">Play Now</span>
+            </a>
+            <a class="game-box" href="./eclipse/spin-wheel.html">
+                <video class="game-video" autoplay loop muted>
+                    <source src="./eclipse/space.mp4" type="video/mp4">
+                </video>
+                <div class="game-overlay"></div>
+                <div class="game-label">Game 4</div>
+                <span class="game-link">Play Now</span>
+            </a>
+        </div>
+    </div>
+
+    <footer>
+       
+    </footer>
+
+    <script>
+        // JavaScript function to toggle sub-topics visibility
+        function toggleSubTopics(topicId) {
+            const subTopics = document.getElementById(topicId);
+            if (subTopics.style.display === 'none' || subTopics.style.display === '') {
+                subTopics.style.display = 'block';
+            } else {
+                subTopics.style.display = 'none';
+            }
+        }
+
+        // JavaScript function to toggle sidebar
+        function toggleSidebar() {
+            const container = document.querySelector('.container');
+            const arrowButton = document.querySelector('.arrow-button');
+            if (container.style.left === '0px') {
+                container.style.left = '-500px';
+                arrowButton.style.left = '10px';
+            } else {
+                container.style.left = '0px';
+                arrowButton.style.left = 'calc(20% + 10px)';
+            }
+        }
+
+        // Close the sidebar when clicking outside of it
+        document.addEventListener('click', function (event) {
+            const container = document.querySelector('.container');
+            const arrowButton = document.querySelector('.arrow-button');
+            if (event.target !== container && event.target !== arrowButton) {
+                container.style.left = '-500px';
+                arrowButton.style.left = '10px';
+            }
+        });
+    </script>
+</body>
+</html>

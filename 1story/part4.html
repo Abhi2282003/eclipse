@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eclipse Quote</title>
+    <style>
+        body {
+            background-image: url('video1.mp4'); /* Use background-image instead of background-video */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            position: relative;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1; /* Place the video behind other content */
+        }
+
+        .content {
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            z-index: 1; /* Place content above the video */
+        }
+        .content {
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .content::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%; /* Set width to 100% to cover the entire content */
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: expandSquare 2s ease forwards;
+            z-index: -3;
+        }
+
+        .end-button {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 18px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+           
+        }
+
+        .end-button:hover {
+            background-color: #0056b3; 
+            
+        }
+
+        p {
+            font-size: 35px;
+            color: #000;
+            margin-top: 20px;
+            animation: fadeInUp 2s ease 2s forwards;
+            max-width: 80%;
+        }
+
+        @keyframes expandSquare {
+            100% {
+                transform: scaleX(1);
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop>
+        <source src="video1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="content">
+        <p>Eclipses, once seen as mystical disruptions, have evolved into a source of wonder and inspiration in our shared human history.</p>
+        <a href="/1story/world.html" class="end-button">END</a>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Game</title>
+    <style>
+        /* Add your CSS styles here */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Hide video overflow */
+        }
+
+        /* Background video styling */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Place the video behind other content */
+            object-fit: cover;
+            pointer-events: none; /* Prevent interaction with the video */
+        }
+
+        #main {
+            width: 100vw;
+            min-height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5); /* Add a semi-transparent background overlay */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #container {
+            width: 80%;
+            height: 80%;
+            overflow: hidden;
+           
+            border-radius: 10px;
+        }
+
+        #nav {
+            width: 100%;
+            height: 100px;
+            background-color: rgb(30, 139, 30);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 19vw;
+        }
+
+        #elem {
+            display: flex;
+            align-items: center;
+            color: black;
+            gap: 2vw;
+        }
+
+        #elem h2 {
+            font-size: 4vw;
+            color: black;
+            text-shadow: 4px 2px 6px rgb(58, 54, 54);
+        }
+
+        .box {
+            background-color: white;
+            width: 70px;
+            height: 20px;
+            color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 4px 4px 4px rgb(41, 20, 20);
+        }
+
+        #pbtm {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 20px;
+            width: 100%;
+            height: calc(100% - 100px);
+        }
+
+        .bubble {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            height: 100px;
+            background-color: rgb(55, 86, 55);
+            color: white;
+            border-radius: 50%;
+            box-shadow: 5px 5px 5px rgb(16, 50, 22);
+            font-size: 1.2vw;
+            font-weight: 800;
+            text-shadow: 4px 4px 6px rgb(247, 247, 247);
+        }
+
+        .bubble:hover {
+            background-color: rgb(4, 5, 4);
+            cursor: pointer;
+        }
+
+        /* CSS code for circular images within bubbles */
+        .bubble img {
+            display: block;
+            border-radius: 50%;
+        }
+    </style>
+    <link rel="shortcut icon" href="https://img.icons8.com/ios-glyphs/30/40C057/bubble.png" type="image/x-icon">
+</head>
+<body>
+    <!-- Background video element -->
+    <video class="video-background" autoplay muted loop>
+        <source src="space.mp4" type="video/mp4">
+    </video>
+
+    <div id="main">
+        <div id="container">
+            <div id="nav">
+                <div id="elem">
+                    <h2>Hit</h2>
+                    <div class="box" id="hitval">Solar Eclipse</div>
+                </div>
+                <div id="elem">
+                    <h2>Time</h2>
+                    <div id="timeint" class="box">60</div>
+                </div>
+                <div id="elem">
+                    <h2>Score</h2>
+                    <div id="scoreval" class="box">0</div>
+                </div>
+            </div>
+            <div id="pbtm">
+                <!-- Your game content goes here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Your JavaScript code goes here
+        var timer = 60;
+        var score = 0;
+        var rn;
+
+        // Eclipse terms and image URLs
+        var eclipseData = {
+            "Lunar Eclipse": { imgSrc: "lunar_eclipse.jpg", width: "100px", height: "100px" },
+            "Annular Eclipse": { imgSrc: "annular_eclipse.jpg", width: "100px", height: "100px" },
+            "Total Eclipse": { imgSrc: "solar_eclipse.jpeg", width: "100px", height: "100px" },
+            "Partial Eclipse": { imgSrc: "partial_eclipse.jpg", width: "100px", height: "100px" },
+            "Corona": { imgSrc: "corona.jpeg", width: "100px", height: "100px" }
+        };
+
+        function increaseScore() {
+            score += 10;
+            document.querySelector("#scoreval").textContent = score;
+        }
+
+        function getNewHit() {
+            rn = Math.floor(Math.random() * Object.keys(eclipseData).length);
+            document.querySelector("#hitval").textContent = Object.keys(eclipseData)[rn];
+        }
+
+        function makeBubble() {
+            var clutter = "";
+            for (var i = 0; i < 48; i++) { // Create 70 bubbles
+                var randomTerm = Object.keys(eclipseData)[Math.floor(Math.random() * Object.keys(eclipseData).length)];
+                var imgInfo = eclipseData[randomTerm]; // Get the image info for the term
+                clutter += `<div class="bubble"><img src="${imgInfo.imgSrc}" alt="${randomTerm}" width="${imgInfo.width}" height="${imgInfo.height}" class="bubble-image"></div>`;
+            }
+            document.querySelector("#pbtm").innerHTML = clutter;
+        }
+
+        function runtimer() {
+            var timerfun = setInterval(function () {
+                if (timer > 0) {
+                    timer--;
+                    document.querySelector("#timeint").textContent = timer;
+                } else {
+                    clearInterval(timerfun);
+                    document.querySelector("#pbtm").innerHTML = `<h1>Game Over</h1>`;
+                }
+            }, 1000);
+        }
+
+        document.querySelector("#pbtm").addEventListener("click", function (event) {
+            if (event.target.classList.contains("bubble-image")) {
+                var clickedTerm = event.target.getAttribute("alt");
+                if (Object.keys(eclipseData)[rn] === clickedTerm) {
+                    increaseScore();
+                    makeBubble();
+                    getNewHit();
+                }
+            }
+        });
+
+        runtimer();
+        makeBubble();
+        getNewHit();
+    </script>
+</body>
+</html>

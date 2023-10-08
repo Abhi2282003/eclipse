@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar and Lunar Eclipse Safety</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap">
+    <style>
+        /* Reset body margin and padding */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Lato', sans-serif; /* Change the font family to Lato */
+            background-image: url('/maincontent/main.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            color: #fff;
+        }
+
+        /* Style for the header */
+        header {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 50px 20px; /* Increased padding to increase the height of the black background */
+            text-align: center;
+        }
+
+        /* Style for the main heading */
+        h1 {
+            font-family: 'Lato', sans-serif; /* Apply Lato font to heading */
+            font-size: 36px; /* Adjust the font size for heading */
+            margin: 0;
+            margin-bottom: 20px; /* Increased margin-bottom to add space between heading and subheading */
+            color: white; /* Text color (white) for heading */
+        }
+
+        /* Style for the subheading */
+        p.subheading {
+            font-family: 'Lato', sans-serif; /* Apply Lato font to subheading */
+            font-size: 20px; /* Adjust the font size for subheading */
+            margin: 0;
+            color: white; /* Text color (white) for subheading */
+        }
+
+        /* Style for the information text */
+        .information {
+            display: none; /* Initially hide the information */
+            text-align: left;
+            padding: 20px;
+            font-size: 20px; /* Font size for the information text */
+            line-height: 1.6; /* Line spacing for better readability */
+            letter-spacing: 1px; /* Letter spacing for better readability */
+            color: white; /* Text color (white) for the information text */
+            background-color: rgba(0, 0, 0, 0.4); /* Medium-dark background */
+            border-radius: 10px; /* Rounded corners for the text box */
+        }
+
+        /* Style for the button container */
+        .button-container {
+            text-align: center; /* Align buttons to the center */
+            margin-top: 20px; /* Add top margin to center the buttons */
+        }
+
+        /* Style for the round rect buttons */
+        .round-rect-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 0 10px; /* Add margin between buttons */
+            font-size: 20px;
+            cursor: pointer;
+            background-color: black; /* Black background for buttons */
+            color: white; /* White text color for buttons */
+            border-radius: 20px; /* Round the corners */
+        }
+
+        /* Style for the text above the buttons */
+        .button-text {
+            font-size: 16px; /* Smaller font size */
+            margin-top: 10px; /* Add top margin */
+            background-color: black; /* Black background */
+            color: white; /* White text color */
+            padding: 5px 10px; /* Add padding to the text */
+            border-radius: 5px; /* Rounded corners for the text box */
+            display: inline-block; /* Make it inline-block to fit within the container */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>Safety Measures for Solar and Lunar Eclipses</h1>
+        <p class="subheading">Both solar and lunar eclipses are fascinating astronomical events, but it's crucial to follow safety measures to protect your eyes and enjoy these celestial phenomena safely.</p>
+    </header>
+
+    <!-- Text above the buttons -->
+    <div class="button-text">Select the eclipse type</div>
+
+    <!-- Button Container -->
+    <div class="button-container">
+        <!-- Button for Solar Eclipse Safety -->
+        <button class="round-rect-button" onclick="showInfo('Solar eclipse safety')">Solar eclipse safety</button>
+
+        <!-- Button for Lunar Eclipse Safety -->
+        <button class="round-rect-button" onclick="showInfo('Lunar eclipse safety')">Lunar eclipse safety</button>
+    </div>
+
+    <!-- Information Text Section -->
+    <main style="padding: 20px;">
+        <div class="information" id="infoText">
+            <!-- Information text will be displayed here -->
+        </div>
+    </main>
+
+    <!-- JavaScript to show information for each topic -->
+    <script>
+        function showInfo(info) {
+            var infoElement = document.getElementById("infoText");
+
+            if (info === 'Solar eclipse safety') {
+                infoElement.innerHTML = `
+                    <p><strong><u>Never Look Directly at the Sun:</u></strong> It is extremely dangerous to look at the sun during a solar eclipse without proper eye protection. Doing so can cause severe and permanent eye damage, including blindness.</p>
+                    <p><strong><u>Use Certified Solar Eclipse Glasses:</u></strong> When viewing a solar eclipse, always wear certified solar eclipse glasses that meet the ISO 12312-2 safety standard. These specialized glasses block out harmful ultraviolet (UV) and infrared (IR) radiation.</p>
+                    <p><strong><u>Inspect Eclipse Glasses:</u></strong> Before using eclipse glasses, ensure they are not scratched, damaged, or expired. If they are, do not use them, as compromised glasses may not provide adequate protection.</p>
+                    <p><strong><u>Solar Filters for Telescopes and Binoculars:</u></strong> If you plan to observe a solar eclipse through telescopes or binoculars, ensure they are equipped with appropriate solar filters to prevent eye injury. Never look through them without proper filtration.</p>
+                    <p><strong><u>Indirect Viewing:</u></strong> Consider safer methods like using a pinhole projector or indirect viewing techniques to experience the eclipse without looking directly at the sun. These methods allow you to project the eclipse onto a surface, eliminating the risk of eye damage.</p>
+                `;
+            } else if (info === 'Lunar eclipse safety') {
+                infoElement.innerHTML = `
+                    <p><strong><u>No Eye Protection Needed:</u></strong> Unlike solar eclipses, lunar eclipses are safe to view with the naked eye. You do not need any special eye protection to observe a lunar eclipse.</p>
+                    <p><strong><u>Be Prepared:</u></strong> Lunar eclipses can last for several hours, so make sure you are adequately dressed for the outdoor viewing conditions. Binoculars or a telescope can enhance your lunar eclipse experience but are not necessary for basic observation.</p>
+                    <p><strong><u>Choose a Good Viewing Location:</u></strong> Select a location with a clear view of the moon's position in the sky, away from sources of light pollution like city lights, to maximize your viewing experience.</p>
+                    
+                `;
+            } else {
+                infoElement.innerHTML = '';
+            }
+
+            infoElement.style.display = info === 'Solar eclipse safety' || info === 'Lunar eclipse safety' ? "block" : "none";
+        }
+    </script>
+</body>
+</html>
+
+
