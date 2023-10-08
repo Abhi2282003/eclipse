@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Video Page</title>
+    <style>
+        /* Reset default margin and padding */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Create a container div for the video */
+        #video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Place the video behind other content */
+        }
+
+        /* Style the video to cover the entire viewport */
+        video {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Style your content container */
+        .content-container {
+            position: absolute;
+            top: 70%;
+            left: 50%; /* Adjusted to center horizontally */
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        /* Style the image with animation */
+        .animated-image {
+            position: absolute;
+            height: 400px;
+            width: 400px;
+            top: 0;
+            left: 0;
+            animation: moveImage 8s linear forwards;
+            cursor: pointer;
+        }
+
+        @keyframes moveImage {
+            0% {
+                transform: translate(0, 0);
+            }
+            95% {
+                transform: translate(calc(100vw - 500px), 0);
+            }
+            100% {
+                transform: translate(calc(100vw - 550px), 0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Create a video element and set it to autoplay and loop -->
+    <div id="video-container">
+        <video autoplay loop muted>
+            <source src="./dream.mp4" type="video/mp4">
+            <!-- Add additional source elements for different video formats (e.g., WebM, Ogg) -->
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Add your content container -->
+    <div class="content-container">
+        <!-- Create an empty span for the text -->
+        <span id="animated-text"></span>
+    </div>
+
+    <!-- Add the animated image inside an anchor element -->
+    <a href="./page3.html">
+        <img class="animated-image" src="./witch.png" alt="Click here to go to the next page" width="100" height="100">
+    </a>
+
+    <script>
+        // JavaScript to print the text one character at a time
+        const text = "Lia is following The Eclipse Witch \n click on witch's broom and\n follow her ";
+        const textContainer = document.getElementById('animated-text');
+        let charIndex = 0;
+
+        function typeText() {
+            if (charIndex < text.length) {
+                textContainer.textContent += text.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeText, 100); // Adjust the delay between characters (in milliseconds)
+            }
+        }
+
+        typeText();
+    </script>
+</body>
+</html>

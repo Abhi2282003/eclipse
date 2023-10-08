@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Video Page</title>
+    <style>
+        /* Reset default margin and padding */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Create a container div for the video */
+        #video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Place the video behind other content */
+        }
+
+        /* Style the video to cover the entire viewport */
+        video {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Style your content container */
+        .content-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            
+            background-color: aliceblue;
+            opacity: 0.7;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: black;
+            font-size: 20pt;
+        }
+
+        /* Style the image */
+        .image-container {
+            position: absolute;
+            height: 150px; /* Adjust the height as needed */
+            width: 150px; /* Adjust the width as needed */
+            bottom: 55%;
+            left: 90%;
+            transform: translateX(-50%); /* Center the image horizontally */
+        }
+
+        /* Style the image inside the anchor element */
+        .image-container img {
+            width: 100%; /* 100% width of the container */
+            height: auto; /* Maintain the image's aspect ratio */
+        }
+    </style>
+</head>
+<body>
+    <!-- Create a video element and set it to autoplay and loop -->
+    <div id="video-container">
+        <video autoplay loop muted>
+            <source src="./witchhouseinside.mp4" type="video/mp4">
+            <!-- Add additional source elements for different video formats (e.g., WebM, Ogg) -->
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Add your content container -->
+    <div class="content-container">
+        <!-- Create an empty span for the text -->
+        <span id="animated-text"></span>
+    </div>
+
+    <!-- Add the image in the left bottom corner -->
+    <div class="image-container">
+        <a href="./spinwheel.html">
+            <img src="./wheel.png" alt="Click here to go to the next page" width="300" height="300">
+        </a>
+    </div>
+
+    <script>
+        // JavaScript to print the text one character at a time
+        const text = "Wait a second I know why are you here.To solve your all the query of MAGICAL ECLIPLE LET ME TAKE YOU TO MY MAGICAL SPINING WHEEL WHICH WILL GUESS YOUR QUESTION AND WILL SOLVE IT";
+        const textContainer = document.getElementById('animated-text');
+        let charIndex = 0;
+
+        function typeText() {
+            if (charIndex < text.length) {
+                textContainer.textContent += text.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeText, 100); // Adjust the delay between characters (in milliseconds)
+            }
+        }
+
+        typeText();
+    </script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        /* Background Video */
+        #background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+        }
+
+        /* Container for Images and Text Boxes */
+        #container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Static Image (Centered) */
+        #static-image {
+            position: relative;
+            z-index: 1;
+            height: 410px;
+            width: 410px;
+        }
+
+        /* Left Image */
+        #left-image {
+            position: absolute;
+            left: 20px;
+            height: 250px;
+            width: 250px;
+            z-index: 2;
+            transform-origin: left bottom;
+            animation: slideImage 5s ease-in-out forwards;
+        }
+
+        /* Center Image */
+        #center-image {
+            position: absolute;
+            top: 45%;
+            left: 42%;
+            transform: translate(-50%, -50%);
+            height: 100px;
+            width: 100px;
+            
+            z-index: 2;
+            transform-origin: left bottom;
+            animation: slideImage 5s ease-in-out forwards;
+        }
+
+        /* Right Image */
+        #right-image {
+            position: absolute;
+            right: 20px;
+            height: 400px;
+            width: 400px;
+            z-index: 2;
+            transform-origin: left bottom;
+            animation: slideImage 5s ease-in-out forwards;
+        }
+
+        /* Left Text Box */
+        #left-text-box {
+            position: absolute;
+            background-color: gray;
+            height: 50%;
+            width: 20%;
+            opacity: 0.7;
+            font-size: 20pt;
+            border-radius: 5%;
+            right: 30%;
+            z-index: 2;
+            color: rgb(12, 0, 0);
+        }
+
+        /* Right Text Box */
+        #right-text-box {
+            position: absolute;
+            background-color: gray;
+            height: 50%;
+            width: 20%;
+            opacity: 0.7;
+            font-size: 20pt;
+            border-radius: 5%;
+            left: 20%;
+            z-index: 2;
+            color: rgb(12, 0, 0);
+        }
+
+        /* White Label */
+        #white-label {
+            position: absolute;
+           top: 0;
+            font-size: 24pt;
+            z-index: 2;
+            color: white;
+        }
+
+        @keyframes slideImage {
+            0% {
+                transform: translateX(-500%); /* Move left (off-screen) */
+            }
+            100% {
+                transform: translateX(0); /* Stop above the original position */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Video -->
+    <video id="background-video" autoplay loop muted>
+        <source src="./smoke.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Image Container -->
+    <div id="container">
+        <!-- Static Image (Centered) -->
+         
+        <!-- Left Image -->
+        <img id="left-image" src="./lunar_eclipse.jpg" alt="Left Image">
+
+        <!-- Center Image -->
+        <img id="center-image" src="./earth.png" alt="Center Image">
+
+        <!-- Right Image -->
+        <img id="right-image" src="./solar_eclipse.jpeg" alt="Right Image">
+        
+        <!-- Left Text Box -->
+        <div id="left-text-box">
+            <p>An eclipse season is like a special time when we might see eclipses. It happens twice a year because of how the Moon's path is tilted.</div>
+            </p>
+        <!-- Right Text Box -->
+        <div id="right-text-box">
+            <p>"During an eclipse season, we can see a solar and lunar eclipse close together."
+            </p>
+        </div>
+
+        <!-- White Label -->
+        <div id="white-label">
+            <h1>What is an eclipse season, and why does it happen twice a year?
+
+            </h1>
+        </div>
+    </div>
+    <script>
+        // Set a timer for redirection after 5 seconds (5000 milliseconds)
+        setTimeout(function () {
+            // Redirect to the original page
+            window.location.href = "spinwheel.html"; // Replace with your original page URL
+        }, 8000);
+    </script>
+</body>
+</html>

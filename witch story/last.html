@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Redirect</title>
+    <style>
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+       
+        .circle {
+            width: 500px;
+            height: 500px;
+            position: absolute;
+            cursor: grab;
+            bottom: 50%;
+            left: 50%;
+            transform: translate(-50%, 50%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .circle img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 50%;
+        }
+
+        #draggableCircle {
+            width: 350px;
+            height: 350px;
+            bottom: 10px;
+            left: 10px;
+            background-color: transparent;
+            z-index: 2;
+        }
+
+        
+        .content-box {
+            width: 100%;
+            height: 100px;
+            background-color: transparent; 
+            text-align: center;
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+            padding-top: 20px;
+            font-size: 50px;
+            display: none;
+            color: white; 
+        }
+        
+        
+
+      
+        video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; 
+        }
+
+        .label {
+            text-align: center;
+            margin-top: 20px;
+            color: aqua;
+            font-size: 30px;
+            
+        }
+    </style>
+</head>
+<body>
+    <video autoplay loop muted>
+        <source src="/main/mainpage.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="circle" id="targetCircle">
+        <img src="/main/sun1.png" alt="Image 2">
+    </div>
+    <div class="circle" id="draggableCircle">
+        <img src="/main/moon2.png" alt="Image 1">
+    </div>
+    <div class="content-box" id="contentBox">
+        Great! Let's start our journey!</p>
+        <a href="/webpage/index.html" id="redirectLink"></a>
+    </div>
+
+
+    <div class="label" id="startLabel">
+        To start our eclipse journey, first we need to see an eclipse. So, create an eclipse.
+    </div>
+
+    <script>
+        const draggableCircle = document.getElementById("draggableCircle");
+        const targetCircle = document.getElementById("targetCircle");
+        const contentBox = document.getElementById("contentBox");
+        const redirectLink = document.getElementById("redirectLink");
+        const startLabel = document.getElementById("startLabel");
+
+        let isDragging = false;
+        let offsetX, offsetY;
+        let autoRedirectTimer;
+
+        draggableCircle.addEventListener("mousedown", (e) => {
+            isDragging = true;
+            offsetX = e.clientX - draggableCircle.getBoundingClientRect().left;
+            offsetY = e.clientY - draggableCircle.getBoundingClientRect().top;
+            draggableCircle.style.cursor = "grabbing";
+        });
+
+        document.addEventListener("mousemove", (e) => {
+            if (!isDragging) return;
+
+            const newX = e.clientX - offsetX;
+            const newY = e.clientY - offsetY;
+
+            draggableCircle.style.left = newX + "px";
+            draggableCircle.style.top = newY + "px";
+
+           
+            const draggableRect = draggableCircle.getBoundingClientRect();
+            const targetRect = targetCircle.getBoundingClientRect();
+
+            if (
+                draggableRect.left + draggableRect.width / 2 >= targetRect.left &&
+                draggableRect.right - draggableRect.width / 2 <= targetRect.right &&
+                draggableRect.top + draggableRect.height / 2 >= targetRect.top &&
+                draggableRect.bottom - draggableRect.height / 2 <= targetRect.bottom
+            ) {
+                
+                contentBox.style.display = "block";
+                redirectLink.style.display = "block";
+
+               
+                startLabel.style.display = "none";
+
+               
+                autoRedirectTimer = setTimeout(() => {
+                    window.location.href = redirectLink.href;
+                }, 2000);
+            } else {
+               
+                contentBox.style.display = "none";
+                redirectLink.style.display = "none";
+
+               
+                startLabel.style.display = "block";
+
+               
+                clearTimeout(autoRedirectTimer);
+            }
+        });
+
+        document.addEventListener("mouseup", () => {
+            isDragging = false;
+            draggableCircle.style.cursor = "grab";
+        });
+    </script>
+</body>
+</html>

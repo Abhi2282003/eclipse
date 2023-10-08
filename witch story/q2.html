@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        /* Background Video */
+        #background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            opacity: 0.7;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -3;
+        }
+
+        /* Container for Images and Text Boxes */
+        #container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Static Image (Centered) */
+        #static-image {
+            position: relative;
+            z-index: 1;
+            height: 410px;
+            width: 1500px;
+            z-index: 3;
+        }
+
+        /* Left Image */
+        #left-image {
+            position: absolute;
+            left: 20px;
+            height: 300px;
+            width: 300px;
+            z-index: 2;
+            transform-origin: right bottom;
+            animation: slideImage 5s ease-in-out forwards;
+        }
+
+        
+
+        /* Right Image */
+        #right-image {
+            position: absolute;
+            right: 20px;
+            height: 300px;
+            width: 300px;
+            z-index: 2;
+            transform-origin: left bottom;
+            animation: slideImage 5s ease-in-out forwards;
+
+        }
+
+        /* Left Text Box */
+        #left-text-box {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30pt;
+            z-index: 2;
+            color: rgb(12, 12, 12);
+            
+        }
+
+        /* Right Text Box */
+        #right-text-box {
+            position: absolute;
+            background-color: gray;
+            height: 20%;
+            width: 50%;
+            opacity: 1;
+            font-size: 25pt;
+            border-radius: 10%;
+            top: 70%;
+            z-index: 2;
+            color: rgb(12, 0, 0);
+        }
+
+        @keyframes slideImage {
+            0% {
+                transform: translateX(500%); /* Move left (off-screen) */
+            }
+            100% {
+                transform: translateX(0); /* Stop above the original position */
+            } }
+            @keyframes slideImage {
+                0% {
+                    transform: translateX(-500%); /* Move left (off-screen) */
+                }
+                100% {
+                    transform: translateX(0); /* Stop above the original position */
+                }
+
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Video -->
+    <video id="background-video" autoplay loop muted>
+        <source src="./ghost.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Image Container -->
+    <div id="container">
+        <!-- Static Image (Centered) -->
+        <img id="static-image" src="./worldmap.png" alt="Static Image" width="200">
+
+        <!-- Left Image -->
+        <img id="left-image" src="./man2.png" alt="Left Image">
+
+        
+
+        <!-- Right Image -->
+        <img id="right-image" src="/man1.png" alt="Right Image">
+        
+        <!-- Left Text Box -->
+        <div id="left-text-box">
+            <h1>Why do some people see eclipses and others don't?
+            </h1>
+        </div>
+        
+        <!-- Right Text Box -->
+        <div id="right-text-box">
+            <p>Eclipses happen when the Sun, Moon, and Earth line up in a special way, creating shadows that cover one another.
+            </p>
+        </div>
+    </div>
+    <script>
+        // Set a timer for redirection after 5 seconds (5000 milliseconds)
+        setTimeout(function () {
+            // Redirect to the original page
+            window.location.href = "spinwheel.html"; // Replace with your original page URL
+        }, 8000);
+    </script>
+</body>
+</html>

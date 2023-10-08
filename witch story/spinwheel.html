@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wheel of Eclipse</title>
+    <style>
+        /* Add your CSS styles for the wheel here */
+        text {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 11px;
+            pointer-events: none;
+            color: white; /* Change text color to white */
+        }
+        .chartholder {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            top: 10%;
+            left: 20%;
+        }
+
+        .slice path {
+            /* Light green and dark green alternating slices */
+            fill: #4ed4c6;
+        }
+
+        .slice:nth-child(even) path {
+            fill: #f0890b; /* Light green */
+        }
+
+        .slice:nth-child(odd) path {
+            fill: #f2a557; /* Dark green */
+        }
+
+        .slice text {
+            font-family: monospace;
+            font-weight: 1000;
+            /* Change text color to black */
+            pointer-events: none;
+            text-anchor: end;
+            font-size: 15px; /* Increase font size */
+        }
+
+        .pointer {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 15px solid rgb(255, 153, 0);
+            transform-origin: bottom;
+            transition: transform 3s ease-in-out;
+        }
+
+        /* Add styles for the video container */
+        #video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        /* Add styles for the video */
+        video {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+
+       
+
+        /* Style for the description text */
+        #description-text {
+            color: white; /* Change text color to white */
+            font-size: 18px; /* Increase font size */
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Video container -->
+    <div id="video-container">
+        <video autoplay loop muted>
+            <source src="halloween.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Wheel container -->
+    <div class="chartholder" id="chart"></div>
+
+    <!-- Description container on the left side -->
+    <div id="description-container">
+        <img id="description-image" src="" alt="Description Image">
+        <p id="description-text"></p>
+    </div>
+
+    <!-- Audio for the spin -->
+    <audio id="spin-audio" src="wheelsound.mp3"></audio>
+
+    <!-- Add the exit button with an anchor tag -->
+    <a href="/witch story/last.html" id="exit-button">
+        <span>&rarr; Next Page</span>
+    </a>
+
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script>
+        var padding = { top: 20, right: 40, bottom: 0, left: 0 },
+            w = 500 - padding.left - padding.right,
+            h = 500 - padding.top - padding.bottom,
+            r = Math.min(w, h) / 2,
+            rotation = 0,
+            oldrotation = 0,
+            picked = 100000,
+            oldpick = [],
+            color = d3.scale.category20();
+
+        var data = [
+            { 
+                "label": "How do eclipses occur?", 
+                "url": "./q1.html" // URL of the HTML page to redirect to
+            },
+            { 
+                "label": "some see eclipses and others don't?", 
+                "url": "./q2.html" // URL of the HTML page to redirect to
+            },
+            { 
+                "label": "What makes the Sun, Moon, and Earth align?", 
+                "url": "./q3.html" // URL of the HTML page to redirect to
+            },
+            { 
+                "label": "What makes the Sun, Moon, and Earth align?", 
+                "url": "./q4.html" // URL of the HTML page to redirect to
+            },
+            { 
+                "label": "How do scientists predict eclipses?", 
+                "url": "./q5.html" // URL of the HTML page to redirect to
+            },
+            { 
+                "label": "difference between lunar and solar eclipses?", 
+                "url": "./q6.html" // URL of the HTML page to redirect to
+            },
+            { 
+                "label": "What is an eclipse season, ?", 
+                "url": "./q7.html" // URL of the HTML page to redirect to
+            },
+            { 
+                "label": "History", 
+                "url": "./history.html" // URL of the HTML page to redirect to
+            },
+            // Add more data entries with labels and URLs as needed
+        ];
+
+        var svg = d3.select('#chart')
+            .append("svg")
+            .data([data])
+            .attr("width", w + padding.left + padding.right)
+            .attr("height", h + padding.top + padding.bottom);
+
+        var container = svg.append("g")
+            .attr("class", "chartholder")
+            .attr("transform", "translate(" + (w / 2 + padding.left) + "," + (h / 2 + padding.top) + ")");
+
+        var vis = container
+            .append("g");
+
+        var pie = d3.layout.pie().sort(null).value(function (d) { return 1; });
+
+        var arc = d3.svg.arc().outerRadius(r);
+
+        var arcs = vis.selectAll("g.slice")
+            .data(pie)
+            .enter()
+            .append("g")
+            .attr("class", "slice");
+
+        arcs.append("path")
+            .attr("fill", function (d, i) { return color(i); })
+            .attr("d", function (d) { return arc(d); });
+
+        arcs.append("text").attr("transform", function (d) {
+            d.innerRadius = 0;
+            d.outerRadius = r;
+            d.angle = (d.startAngle + d.endAngle) / 2;
+            return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")translate(" + (d.outerRadius - 10) + ")";
+        })
+            .attr("text-anchor", "end")
+            .text(function (d, i) {
+                return data[i].label;
+            });
+
+        container.on("click", spin);
+
+        function spin(d) {
+            container.on("click", null);
+
+            if (oldpick.length == data.length) {
+                container.on("click", null);
+                return;
+            }
+
+            var ps = 360 / data.length,
+                pieslice = Math.round(1440 / data.length),
+                rng = Math.floor((Math.random() * 1440) + 360);
+
+            rotation = (Math.round(rng / ps) * ps);
+
+            picked = Math.round(data.length - (rotation % 360) / ps);
+            picked = picked >= data.length ? (picked % data.length) : picked;
+
+            if (oldpick.indexOf(picked) !== -1) {
+                d3.select(this).call(spin);
+                return;
+            } else {
+                oldpick.push(picked);
+            }
+
+            rotation += 90 - Math.round(ps / 2);
+            vis.transition()
+                .duration(1000)
+                .attrTween("transform", rotTween)
+                .each("end", function () {
+                    d3.select(".slice:nth-child(" + (picked + 1) + ") path")
+                        .attr("fill", "#111");
+
+                    // Redirect to the selected URL
+                    window.location.href = data[picked].url;
+
+                    oldrotation = rotation;
+                });
+        }
+
+        svg.append("g")
+            .attr("transform", "translate(" + (w + padding.left + padding.right) + "," + ((h / 2) + padding.top) + ")")
+            .append("path")
+            .attr("d", "M-" + (r * .15) + ",0L0," + (r * .05) + "L0,-" + (r * .05) + "Z")
+            .style({ "fill": "black" });
+
+        container.append("circle")
+            .attr("cx", 0)
+            .attr("cy", 0)
+            .attr("r", 60)
+            .style({ "fill": "white", "cursor": "pointer" });
+
+        container.append("text")
+            .attr("x", 0)
+            .attr("y", 15)
+            .attr("text-anchor", "middle")
+            .text("SPIN")
+            .style({ "font-weight": "bold", "font-size": "30px" });
+
+        function rotTween(to) {
+            var i = d3.interpolate(oldrotation % 360, rotation);
+            return function (t) {
+                return "rotate(" + i(t) + ")";
+            };
+        }
+
+        function getRandomNumbers() {
+            var array = new Uint16Array(1000);
+            var scale = d3.scale.linear().range([360, 1440]).domain([0, 100000]);
+            if (window.hasOwnProperty("crypto") && typeof window.crypto.getRandomValues === "function") {
+                window.crypto.getRandomValues(array);
+                console.log("works");
+            } else {
+                for (var i = 0; i < 1000; i++) {
+                    array[i] = Math.floor(Math.random() * 100000) + 1;
+                }
+            }
+            return array;
+        }
+    </script>
+</body>
+</html>
