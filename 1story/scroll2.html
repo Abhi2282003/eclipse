@@ -60,7 +60,7 @@
 
         .bottom-left-image {
             bottom: 30%;
-            right: 35%;
+            right: 45%;
             height: 200px;
             width: 200px;
         }
@@ -92,7 +92,7 @@
 
         @font-face {
             font-family: 'YourCustomFont'; /* Choose a font name for reference */
-            src: url('../scroll.ttf') format('truetype');
+            src: url('./scroll.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
         }
@@ -109,11 +109,11 @@
 </head>
 <body>
     <video id="background-video" autoplay loop muted>
-        <source src="../backscroll.mp4" type="video/mp4">
+        <source src="./backscroll.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 
-    <img id="image-overlay" src="../scroll1.png" alt="Image Overlay">
+    <img id="image-overlay" src="./scroll1.png" alt="Image Overlay">
     
     <div id="text-container">
        INDIA
@@ -126,8 +126,8 @@
 <a id="next-button" href="./scroll3.html">Next</a>
 
 
-    <img class="bottom-left-image fade-in" src="../manthan.webp" alt="Bottom Left Image">
-    <img class="bottom-right-image fade-in" src="../drago.png" alt="Bottom Right Image">
+    <img class="bottom-left-image fade-in" src="./manthan.webp" alt="Bottom Left Image">
+    <img class="bottom-right-image fade-in" src="./drago.png" alt="Bottom Right Image">
 
     <script>
         const lines = [
